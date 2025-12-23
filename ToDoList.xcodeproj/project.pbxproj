@@ -22,6 +22,8 @@
 		944075182EFAD82B00EC74B1 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075172EFAD82B00EC74B1 /* TableHeaderView.swift */; };
 		9440751A2EFADB1B00EC74B1 /* TasksViewController+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075192EFADB1B00EC74B1 /* TasksViewController+TextField.swift */; };
 		9440751E2EFAEA6C00EC74B1 /* TaskDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440751D2EFAEA6C00EC74B1 /* TaskDetailsViewController.swift */; };
+		944075212EFAF14000EC74B1 /* ToDoListModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9440751F2EFAF14000EC74B1 /* ToDoListModel.xcdatamodeld */; };
+		944075232EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075222EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		944075172EFAD82B00EC74B1 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		944075192EFADB1B00EC74B1 /* TasksViewController+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TasksViewController+TextField.swift"; sourceTree = "<group>"; };
 		9440751D2EFAEA6C00EC74B1 /* TaskDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsViewController.swift; sourceTree = "<group>"; };
+		944075202EFAF14000EC74B1 /* ToDoListModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoListModel.xcdatamodel; sourceTree = "<group>"; };
+		944075222EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				944075012EFAA44800EC74B1 /* .gitignore */,
+				9440751F2EFAF14000EC74B1 /* ToDoListModel.xcdatamodeld */,
 				944075032EFAA48900EC74B1 /* Application */,
 				944075042EFAA49000EC74B1 /* SupportingFiles */,
 				944075122EFAD28500EC74B1 /* Model */,
@@ -137,6 +142,7 @@
 			children = (
 				944075102EFAA72900EC74B1 /* TasksViewController+TableView.swift */,
 				944075192EFADB1B00EC74B1 /* TasksViewController+TextField.swift */,
+				944075222EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -248,6 +254,8 @@
 				9440750B2EFAA5CE00EC74B1 /* AppColors.swift in Sources */,
 				944074FB2EFAA43A00EC74B1 /* SceneDelegate.swift in Sources */,
 				944075162EFAD4FE00EC74B1 /* BottomView.swift in Sources */,
+				944075232EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift in Sources */,
+				944075212EFAF14000EC74B1 /* ToDoListModel.xcdatamodeld in Sources */,
 				944075112EFAA72900EC74B1 /* TasksViewController+TableView.swift in Sources */,
 				944075142EFAD2A400EC74B1 /* TaskModel.swift in Sources */,
 				9440751E2EFAEA6C00EC74B1 /* TaskDetailsViewController.swift in Sources */,
@@ -491,6 +499,19 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		9440751F2EFAF14000EC74B1 /* ToDoListModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				944075202EFAF14000EC74B1 /* ToDoListModel.xcdatamodel */,
+			);
+			currentVersion = 944075202EFAF14000EC74B1 /* ToDoListModel.xcdatamodel */;
+			path = ToDoListModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 944074D02EFAA42F00EC74B1 /* Project object */;
 }

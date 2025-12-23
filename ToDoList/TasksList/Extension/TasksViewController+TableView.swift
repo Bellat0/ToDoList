@@ -66,8 +66,22 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let task = filteredTasks[indexPath.row]
-        
-        let taskDetailsVC = TaskDetailsViewController(task: task)
-        navigationController?.pushViewController(taskDetailsVC, animated: true)
+        let vc = TaskDetailsViewController(task: task)
+
+        vc.onSave = { [weak self] updatedTask in
+            guard let self else { return }
+
+            self.updateTaskInCoreData(updatedTask)
+
+            self.filteredTasks[indexPath.row] = updatedTask
+
+            if let index = self.tasks.firstIndex(where: { $0.id == updatedTask.id }) {
+                self.tasks[index] = updatedTask
+            }
+
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

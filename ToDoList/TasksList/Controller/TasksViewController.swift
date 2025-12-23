@@ -7,9 +7,10 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class TasksViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     // MARK:  UI
@@ -23,13 +24,7 @@ class TasksViewController: UIViewController {
     
     // MARK: Data
     
-    var tasks = [
-        TaskModel(title: "Уборка в квартире", description: "Сделать уборку в квартире", date: .now),
-        TaskModel(title: "Спорт", description: "Купить абонемент в качалку", date: .now),
-        TaskModel(title: "Вечерний отдых", description: "Почитать комиксы", date: .now),
-        TaskModel(title: "Английский", description: "Скачать дуолинго", date: .now),
-        TaskModel(title: "Английский", description: "Скачать дуолинго", date: .now)
-    ]
+    var tasks = [TaskModel]()
     
     var filteredTasks = [TaskModel]()
     
@@ -44,11 +39,14 @@ class TasksViewController: UIViewController {
         
         filteredTasks = tasks
         
+        loadTasks()
+        
         setupViews()
         setupConstraints()
         setupTableView()
         
         setupBottomNumberLabel()
+        setupBottomActions()
     }
     
     // MARK: - Setup
@@ -102,6 +100,61 @@ class TasksViewController: UIViewController {
         }
         tableHeaderView.layoutIfNeeded()
         tableView.tableHeaderView = tableHeaderView
+    }
+    
+    private func setupBottomActions() {
+        bottomView.addTaskCompletion = { [weak self] in
+            guard let self else { return }
+            
+            let vc = TaskDetailsViewController(task: nil)
+            
+            vc.onSave = { [weak self] newTask in
+                guard let self else { return }
+                
+                let context = CoreDataManager.shared.context
+                
+                let entity = TaskEntity(context: context)
+                entity.id = newTask.id
+                entity.title = newTask.title
+                entity.taskDescription = newTask.description
+                entity.date = newTask.date
+                entity.isCompleted = newTask.isCompleted
+                
+                CoreDataManager.shared.saveContext()
+                
+                self.tasks.insert(newTask, at: 0)
+                self.filteredTasks = self.tasks
+                self.tableView.reloadData()
+                self.setupBottomNumberLabel()
+            }
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    private func loadTasks() {
+        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "date", ascending: false)
+        ]
+        
+        let entities = try? CoreDataManager.shared.context.fetch(request)
+        self.tasks = entities?.map { $0.toModel() } ?? []
+        self.filteredTasks = tasks
+    }
+    
+    func updateTaskInCoreData(_ task: TaskModel) {
+        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
+
+        if let entity = try? CoreDataManager.shared.context.fetch(request).first {
+            entity.title = task.title
+            entity.taskDescription = task.description
+            entity.date = task.date
+            entity.isCompleted = task.isCompleted
+
+            CoreDataManager.shared.saveContext()
+        }
     }
     
     // MARK: - Actions

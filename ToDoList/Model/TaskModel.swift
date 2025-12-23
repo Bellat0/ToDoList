@@ -10,6 +10,7 @@ import Foundation
 import Foundation
 
 struct TaskModel {
+    let id: UUID
     var isCompleted: Bool = false
     var title: String?
     var description: String?

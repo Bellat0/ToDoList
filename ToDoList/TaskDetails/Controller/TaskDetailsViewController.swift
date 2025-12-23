@@ -18,9 +18,11 @@ final class TaskDetailsViewController: UIViewController {
     
     private let task: TaskModel?
     
+    var onSave: ((TaskModel) -> Void)?
+    
     // MARK: - Init
     
-    init(task: TaskModel) {
+    init(task: TaskModel?) {
         self.task = task
         
         super.init(nibName: nil, bundle: nil)
@@ -38,6 +40,14 @@ final class TaskDetailsViewController: UIViewController {
         setupViews()
         setupConstraints()
         configure()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if self.isMovingFromParent {
+            saveTaskIfNeeded()
+        }
     }
     
     // MARK: - Setup
@@ -89,6 +99,23 @@ final class TaskDetailsViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yy"
         return formatter.string(from: date)
+    }
+    
+    private func saveTaskIfNeeded() {
+
+        let title = titleTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let description = descriptionTextView.text
+
+        guard !title.isEmpty else { return }
+
+        let newTask = TaskModel(
+            isCompleted: task?.isCompleted ?? false,
+            title: title,
+            description: description,
+            date: task?.date ?? Date()
+        )
+
+        onSave?(newTask)
     }
     
     // MARK: - Configure
