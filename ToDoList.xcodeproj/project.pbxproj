@@ -19,6 +19,7 @@
 		944075112EFAA72900EC74B1 /* TasksViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075102EFAA72900EC74B1 /* TasksViewController+TableView.swift */; };
 		944075142EFAD2A400EC74B1 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075132EFAD2A400EC74B1 /* TaskModel.swift */; };
 		944075162EFAD4FE00EC74B1 /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075152EFAD4FE00EC74B1 /* BottomView.swift */; };
+		944075182EFAD82B00EC74B1 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075172EFAD82B00EC74B1 /* TableHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		944075102EFAA72900EC74B1 /* TasksViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TasksViewController+TableView.swift"; sourceTree = "<group>"; };
 		944075132EFAD2A400EC74B1 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		944075152EFAD4FE00EC74B1 /* BottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomView.swift; sourceTree = "<group>"; };
+		944075172EFAD82B00EC74B1 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				9440750D2EFAA63900EC74B1 /* TaskCell.swift */,
+				944075172EFAD82B00EC74B1 /* TableHeaderView.swift */,
 				944075152EFAD4FE00EC74B1 /* BottomView.swift */,
 			);
 			path = View;
@@ -218,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				944075182EFAD82B00EC74B1 /* TableHeaderView.swift in Sources */,
 				944074FA2EFAA43A00EC74B1 /* AppDelegate.swift in Sources */,
 				9440750B2EFAA5CE00EC74B1 /* AppColors.swift in Sources */,
 				944074FB2EFAA43A00EC74B1 /* SceneDelegate.swift in Sources */,

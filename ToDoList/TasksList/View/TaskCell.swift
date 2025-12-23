@@ -128,8 +128,6 @@ final class TaskCell: UITableViewCell {
         self.descriptionLabel.text = task.description
         self.dateLabel.text = dateFormatter()
 
-       
         updateUI(completed: isCompleted)
     }
-    
 }

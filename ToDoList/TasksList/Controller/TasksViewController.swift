@@ -15,18 +15,17 @@ class TasksViewController: UIViewController {
     private(set) var tableView = UITableView()
     
     private let bottomView = BottomView()
-//    lazy var tableHeaderView: TableHeaderView = {
-//        return TableHeaderView(frame: .zero)
-//    }()
+    lazy var tableHeaderView: TableHeaderView = {
+        return TableHeaderView(frame: .zero)
+    }()
     
     var tasks = [
-        TaskModel(title: "Уборка в квартире", description: "Сделать уборку в квартире",date: .now),
-        TaskModel(title: "Спорт", description: "Купить абонемент в качалку",date: .now),
-        TaskModel(title: "Вечерний отдых", description: "Почитать комиксы",date: .now),
-        TaskModel(title: "Английский", description: "Скачать дуолинго",date: .now)
+        TaskModel(title: "Уборка в квартире", description: "Сделать уборку в квартире", date: .now),
+        TaskModel(title: "Спорт", description: "Купить абонемент в качалку", date: .now),
+        TaskModel(title: "Вечерний отдых", description: "Почитать комиксы", date: .now),
+        TaskModel(title: "Английский", description: "Скачать дуолинго", date: .now),
+        TaskModel(title: "Английский", description: "Скачать дуолинго", date: .now)
     ]
-    
-    // MARK: - Init
     
     // MARK: - Lifecycle
     
@@ -36,6 +35,8 @@ class TasksViewController: UIViewController {
         setupViews()
         setupConstraints()
         setupTableView()
+        
+        setupBottomNumberLabel()
     }
     
     // MARK: - Setup
@@ -51,13 +52,15 @@ class TasksViewController: UIViewController {
         bottomView.backgroundColor = AppColors.containerBackground
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.register(
             TaskCell.self,
             forCellReuseIdentifier: TaskCell.ID)
+        
+        setupTableHeaderView()
     }
     
     private func setupConstraints() {
@@ -76,6 +79,15 @@ class TasksViewController: UIViewController {
     
     private func setupBottomNumberLabel() {
         bottomView.configure(number: String(tasks.count))
+    }
+    
+    private func setupTableHeaderView() {
+        tableView.tableHeaderView = tableHeaderView
+        tableHeaderView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+        }
+        tableHeaderView.layoutIfNeeded()
+        tableView.tableHeaderView = tableHeaderView
     }
 }
 
