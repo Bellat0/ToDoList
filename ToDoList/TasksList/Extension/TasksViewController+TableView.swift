@@ -9,7 +9,7 @@ import UIKit
 
 extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return filteredTasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -18,7 +18,7 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath
         ) as? TaskCell else { return UITableViewCell() }
         
-        let task = tasks[indexPath.row]
+        let task = filteredTasks[indexPath.row]
         cell.configure(with: task)
         
         return cell

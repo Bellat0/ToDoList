@@ -12,12 +12,16 @@ class TasksViewController: UIViewController {
 
     // MARK: - Properties
     
+    // MARK:  UI
+    
     private(set) var tableView = UITableView()
     
     private let bottomView = BottomView()
     lazy var tableHeaderView: TableHeaderView = {
         return TableHeaderView(frame: .zero)
     }()
+    
+    // MARK: Data
     
     var tasks = [
         TaskModel(title: "Уборка в квартире", description: "Сделать уборку в квартире", date: .now),
@@ -27,10 +31,18 @@ class TasksViewController: UIViewController {
         TaskModel(title: "Английский", description: "Скачать дуолинго", date: .now)
     ]
     
+    var filteredTasks = [TaskModel]()
+    
+    // MARK: State
+    
+    var isSearching = false
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        filteredTasks = tasks
         
         setupViews()
         setupConstraints()
@@ -59,6 +71,8 @@ class TasksViewController: UIViewController {
         tableView.register(
             TaskCell.self,
             forCellReuseIdentifier: TaskCell.ID)
+        
+        tableHeaderView.searchField.delegate = self
         
         setupTableHeaderView()
     }
