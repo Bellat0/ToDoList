@@ -8,20 +8,20 @@
 import UIKit
 import SnapKit
 
-class TaskDetailsViewController: UIViewController {
+final class TaskDetailsViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let titleTextField = UITextField()
+    private let titleTextView = UITextView()
     private let dateLabel = UILabel()
     private let descriptionTextView = UITextView()
+    
+    private let task: TaskModel?
     
     // MARK: - Init
     
     init(task: TaskModel) {
-        self.titleTextField.text = task.title
-        self.dateLabel.text = task.date.description
-        self.descriptionTextView.text = task.description
+        self.task = task
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,6 +37,7 @@ class TaskDetailsViewController: UIViewController {
         
         setupViews()
         setupConstraints()
+        configure()
     }
     
     // MARK: - Setup
@@ -44,11 +45,14 @@ class TaskDetailsViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = AppColors.appBackground
         
-        view.addSubview(titleTextField)
-        titleTextField.font = .systemFont(ofSize: 32, weight: .bold)
-        titleTextField.textColor = AppColors.primaryText
-        titleTextField.borderStyle = .none
-        titleTextField.returnKeyType = .done
+        view.addSubview(titleTextView)
+        titleTextView.font = .systemFont(ofSize: 32, weight: .bold)
+        titleTextView.textColor = AppColors.primaryText
+        titleTextView.backgroundColor = .clear
+        titleTextView.isScrollEnabled = false
+        titleTextView.textContainerInset = .zero
+        titleTextView.textContainer.lineFragmentPadding = 0
+        titleTextView.returnKeyType = .done
         
         view.addSubview(dateLabel)
         dateLabel.font = .systemFont(ofSize: 14)
@@ -64,20 +68,36 @@ class TaskDetailsViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        titleTextField.snp.makeConstraints { make in
+        titleTextView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-
+        
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(8)
+            make.top.equalTo(titleTextView.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-
+        
         descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(dateLabel.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.lessThanOrEqualTo(view.keyboardLayoutGuide.snp.top).offset(-16)
         }
+    }
+    
+    private func format(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yy"
+        return formatter.string(from: date)
+    }
+    
+    // MARK: - Configure
+    
+    private func configure() {
+        guard let task else { return }
+        
+        titleTextView.text = task.title
+        descriptionTextView.text = task.description
+        dateLabel.text = format(task.date)
     }
 }

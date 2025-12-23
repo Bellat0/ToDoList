@@ -61,4 +61,13 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
             return UIMenu(title: "", children: [editAction, shareAction, deleteAction])
         }
     }
+    
+    // MARK: - Did select row
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = filteredTasks[indexPath.row]
+        
+        let taskDetailsVC = TaskDetailsViewController(task: task)
+        navigationController?.pushViewController(taskDetailsVC, animated: true)
+    }
 }
