@@ -17,6 +17,7 @@
 		9440750B2EFAA5CE00EC74B1 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440750A2EFAA5CE00EC74B1 /* AppColors.swift */; };
 		9440750E2EFAA63900EC74B1 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440750D2EFAA63900EC74B1 /* TaskCell.swift */; };
 		944075112EFAA72900EC74B1 /* TasksViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075102EFAA72900EC74B1 /* TasksViewController+TableView.swift */; };
+		944075142EFAD2A400EC74B1 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075132EFAD2A400EC74B1 /* TaskModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		9440750A2EFAA5CE00EC74B1 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		9440750D2EFAA63900EC74B1 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		944075102EFAA72900EC74B1 /* TasksViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TasksViewController+TableView.swift"; sourceTree = "<group>"; };
+		944075132EFAD2A400EC74B1 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				944075012EFAA44800EC74B1 /* .gitignore */,
 				944075032EFAA48900EC74B1 /* Application */,
 				944075042EFAA49000EC74B1 /* SupportingFiles */,
+				944075122EFAD28500EC74B1 /* Model */,
 				944075052EFAA49900EC74B1 /* TasksList */,
 			);
 			path = ToDoList;
@@ -124,6 +127,14 @@
 				944075102EFAA72900EC74B1 /* TasksViewController+TableView.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		944075122EFAD28500EC74B1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				944075132EFAD2A400EC74B1 /* TaskModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 				9440750B2EFAA5CE00EC74B1 /* AppColors.swift in Sources */,
 				944074FB2EFAA43A00EC74B1 /* SceneDelegate.swift in Sources */,
 				944075112EFAA72900EC74B1 /* TasksViewController+TableView.swift in Sources */,
+				944075142EFAD2A400EC74B1 /* TaskModel.swift in Sources */,
 				944074FC2EFAA43A00EC74B1 /* TasksViewController.swift in Sources */,
 				9440750E2EFAA63900EC74B1 /* TaskCell.swift in Sources */,
 			);

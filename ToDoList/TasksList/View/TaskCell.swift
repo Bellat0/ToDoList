@@ -44,7 +44,7 @@ final class TaskCell: UITableViewCell {
         statusButton.setImage(UIImage(systemName: "circle"), for: .normal)
         statusButton.tintColor = AppColors.secondaryText
         
-//        statusButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        statusButton.addTarget(self, action: #selector(statusButtonTapped), for: .touchUpInside)
         
         contentView.addSubview(contentStackView)
         contentStackView.addArrangedSubview(titleLabel)
@@ -79,5 +79,45 @@ final class TaskCell: UITableViewCell {
             make.leading.equalTo(statusButton.snp.trailing).offset(8)
             make.trailing.equalToSuperview().offset(-16)
         }
+    }
+    
+    // MARK: - Action
+    
+    @objc func statusButtonTapped() {
+        isCompleted.toggle()
+        updateUI(completed: isCompleted)
+    }
+    
+    private func updateUI(completed: Bool) {
+        let textColor = completed ? 0.5 : 1.0
+        titleLabel.layer.opacity = Float(textColor)
+        descriptionLabel.layer.opacity = Float(textColor)
+        
+        if completed {
+            
+            let attributeString = NSAttributedString(
+                string: titleLabel.text ?? "",
+                attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue]
+            )
+            titleLabel.attributedText = attributeString
+            statusButton.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+            statusButton.tintColor = AppColors.accent
+        } else {
+            let plainString = titleLabel.text ?? ""
+            titleLabel.attributedText = nil
+            titleLabel.text = plainString
+            statusButton.setImage(UIImage(systemName: "circle"), for: .normal)
+            statusButton.tintColor = AppColors.secondaryText
+        }
+    }
+    
+    // MARK: - Configure
+    
+    func configure(with task: TaskModel) {
+        self.titleLabel.text = task.title
+        self.descriptionLabel.text = task.description
+        self.dateLabel.text = task.date.formatted()
+
+        updateUI(completed: isCompleted)
     }
 }

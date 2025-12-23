@@ -19,6 +19,13 @@ class TasksViewController: UIViewController {
 //        return TableHeaderView(frame: .zero)
 //    }()
     
+    var tasks = [
+        TaskModel(title: "Уборка в квартире", description: "Сделать уборку в квартире",date: .now),
+        TaskModel(title: "Спорт", description: "Купить абонемент в качалку",date: .now),
+        TaskModel(title: "Вечерний отдых", description: "Почитать комиксы",date: .now),
+        TaskModel(title: "Английский", description: "Скачать дуолинго",date: .now)
+    ]
+    
     // MARK: - Init
     
     // MARK: - Lifecycle
@@ -42,8 +49,8 @@ class TasksViewController: UIViewController {
     }
     
     func setupTableView() {
-//        tableView.delegate = self
-//        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         
         tableView.register(
             TaskCell.self,
