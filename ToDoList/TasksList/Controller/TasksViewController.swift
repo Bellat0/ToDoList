@@ -12,7 +12,12 @@ class TasksViewController: UIViewController {
 
     // MARK: - Properties
     
-    // MARK: - Dependencies
+    private(set) var tableView = UITableView()
+    
+//    private let bottomView = BottomView()
+//    lazy var tableHeaderView: TableHeaderView = {
+//        return TableHeaderView(frame: .zero)
+//    }()
     
     // MARK: - Init
     
@@ -23,17 +28,34 @@ class TasksViewController: UIViewController {
         
         setupViews()
         setupConstraints()
-//        setupTableView()
+        setupTableView()
     }
     
     // MARK: - Setup
     
     private func setupViews() {
+        view.backgroundColor = AppColors.appBackground
         
+        view.addSubview(tableView)
+        tableView.backgroundColor = AppColors.appBackground
+        tableView.showsVerticalScrollIndicator = false
+    }
+    
+    func setupTableView() {
+//        tableView.delegate = self
+//        tableView.dataSource = self
+        
+        tableView.register(
+            TaskCell.self,
+            forCellReuseIdentifier: TaskCell.ID)
     }
     
     private func setupConstraints() {
-        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
 }
 
