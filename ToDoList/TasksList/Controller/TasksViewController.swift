@@ -103,5 +103,21 @@ class TasksViewController: UIViewController {
         tableHeaderView.layoutIfNeeded()
         tableView.tableHeaderView = tableHeaderView
     }
+    
+    // MARK: - Actions
+    
+    func presentShareController(for indexPath: IndexPath) {
+        let task = filteredTasks[indexPath.row]
+        
+        let text = """
+        \(task.title ?? "")
+        
+        \(task.description ?? "")
+        """
+        
+        let vc = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        
+        present(vc, animated: true)
+    }
 }
 
