@@ -11,9 +11,11 @@ import SnapKit
 final class TaskCell: UITableViewCell {
     static let ID = "TaskCell"
     
-    // MARK: - Properties
+    // MARK: - Completion handler
     
-    var isCompleted: Bool = false
+    var onStatusToggle: (() -> Void)?
+    
+    // MARK: - Properties
     
     private let statusButton = UIButton()
     
@@ -33,6 +35,17 @@ final class TaskCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        titleLabel.attributedText = nil
+        titleLabel.textColor = AppColors.primaryText
+        descriptionLabel.alpha = 1.0
+        
+        statusButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        statusButton.tintColor = AppColors.secondaryText
     }
     
     // MARK: - Setup
@@ -84,50 +97,52 @@ final class TaskCell: UITableViewCell {
     // MARK: - Action
     
     @objc func statusButtonTapped() {
-        isCompleted.toggle()
-        updateUI(completed: isCompleted)
+        onStatusToggle?()
     }
     
     private func updateUI(completed: Bool) {
-        let textColor = completed ? 0.5 : 1.0
-        titleLabel.layer.opacity = Float(textColor)
-        descriptionLabel.layer.opacity = Float(textColor)
+        let baseText = titleLabel.text ?? ""
         
         if completed {
-            
-            let attributeString = NSAttributedString(
-                string: titleLabel.text ?? "",
-                attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue]
+            titleLabel.attributedText = NSAttributedString(
+                string: baseText,
+                attributes: [
+                    .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+                    .foregroundColor: AppColors.primaryText.withAlphaComponent(0.5)
+                ]
             )
-            titleLabel.attributedText = attributeString
+            
             statusButton.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
             statusButton.tintColor = AppColors.accent
+            
         } else {
-            let plainString = titleLabel.text ?? ""
-            titleLabel.attributedText = nil
-            titleLabel.text = plainString
+            titleLabel.attributedText = NSAttributedString(
+                string: baseText,
+                attributes: [
+                    .foregroundColor: AppColors.primaryText
+                ]
+            )
+            
             statusButton.setImage(UIImage(systemName: "circle"), for: .normal)
             statusButton.tintColor = AppColors.secondaryText
         }
+        
+        descriptionLabel.alpha = completed ? 0.5 : 1.0
     }
     
-    private func dateFormatter() -> String {
+    private func dateFormatter(from date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
         formatter.dateFormat = "dd/MM/yy"
-        let dateString = formatter.string(from: Date())
-        
-        return dateString
+        return formatter.string(from: date)
     }
     
     // MARK: - Configure
     
     func configure(with task: TaskModel) {
-        self.titleLabel.text = task.title
-        self.descriptionLabel.text = task.description
-        self.dateLabel.text = dateFormatter()
-
-        updateUI(completed: isCompleted)
+        titleLabel.text = task.title
+        descriptionLabel.text = task.description
+        dateLabel.text = dateFormatter(from: task.date)
+        
+        updateUI(completed: task.isCompleted)
     }
 }

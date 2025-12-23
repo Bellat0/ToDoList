@@ -21,6 +21,21 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
         let task = filteredTasks[indexPath.row]
         cell.configure(with: task)
         
+        cell.onStatusToggle = { [weak self] in
+            guard let self else { return }
+            
+            self.filteredTasks[indexPath.row].isCompleted.toggle()
+            
+            if let originalIndex = self.tasks.firstIndex(where: {
+                $0.title == task.title && $0.date == task.date
+            }) {
+                self.tasks[originalIndex].isCompleted =
+                self.filteredTasks[indexPath.row].isCompleted
+            }
+            
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
         return cell
     }
     
