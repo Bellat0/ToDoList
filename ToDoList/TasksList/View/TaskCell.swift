@@ -111,13 +111,25 @@ final class TaskCell: UITableViewCell {
         }
     }
     
+    private func dateFormatter() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        formatter.dateFormat = "dd/MM/yy"
+        let dateString = formatter.string(from: Date())
+        
+        return dateString
+    }
+    
     // MARK: - Configure
     
     func configure(with task: TaskModel) {
         self.titleLabel.text = task.title
         self.descriptionLabel.text = task.description
-        self.dateLabel.text = task.date.formatted()
+        self.dateLabel.text = dateFormatter()
 
+       
         updateUI(completed: isCompleted)
     }
+    
 }

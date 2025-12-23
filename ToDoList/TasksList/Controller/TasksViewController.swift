@@ -14,7 +14,7 @@ class TasksViewController: UIViewController {
     
     private(set) var tableView = UITableView()
     
-//    private let bottomView = BottomView()
+    private let bottomView = BottomView()
 //    lazy var tableHeaderView: TableHeaderView = {
 //        return TableHeaderView(frame: .zero)
 //    }()
@@ -46,6 +46,9 @@ class TasksViewController: UIViewController {
         view.addSubview(tableView)
         tableView.backgroundColor = AppColors.appBackground
         tableView.showsVerticalScrollIndicator = false
+        
+        view.addSubview(bottomView)
+        bottomView.backgroundColor = AppColors.containerBackground
     }
     
     func setupTableView() {
@@ -61,8 +64,18 @@ class TasksViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
         }
+        
+        bottomView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(49+34)
+        }
+    }
+    
+    private func setupBottomNumberLabel() {
+        bottomView.configure(number: String(tasks.count))
     }
 }
 
