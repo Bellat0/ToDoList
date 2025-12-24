@@ -28,6 +28,8 @@ class TasksViewController: UIViewController {
     
     var filteredTasks = [TaskModel]()
     
+    private let repository = TasksRepository()
+    
     // MARK: State
     
     var isSearching = false
@@ -39,14 +41,12 @@ class TasksViewController: UIViewController {
         
         filteredTasks = tasks
         
-        loadTasks()
-        
         setupViews()
         setupConstraints()
         setupTableView()
-        
-        setupBottomNumberLabel()
         setupBottomActions()
+        
+        loadInitialTodosIfNeeded()
     }
     
     // MARK: - Setup
@@ -146,13 +146,13 @@ class TasksViewController: UIViewController {
     func updateTaskInCoreData(_ task: TaskModel) {
         let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
-
+        
         if let entity = try? CoreDataManager.shared.context.fetch(request).first {
             entity.title = task.title
             entity.taskDescription = task.description
             entity.date = task.date
             entity.isCompleted = task.isCompleted
-
+            
             CoreDataManager.shared.saveContext()
         }
     }
@@ -171,6 +171,43 @@ class TasksViewController: UIViewController {
         let vc = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         
         present(vc, animated: true)
+    }
+    
+    func loadFromCoreData() {
+        tasks = repository.fetchTasks()
+        tableView.reloadData()
+    }
+    
+    func loadInitialTodosIfNeeded() {
+        let hasLoaded = UserDefaults.standard.bool(forKey: AppLaunchState.hasLoadedInitialTodos)
+        
+        
+        if hasLoaded || !repository.isEmpty() {
+            loadTasks()
+            tableView.reloadData()
+            setupBottomNumberLabel()
+            return
+        }
+        
+        NetworkService.shared.fetchData { [weak self] result in
+            switch result {
+            case .success(let todos):
+                let models = todos.map { $0.toTaskModel() }
+                
+                
+                self?.repository.saveInitialTasks(models) {
+                    UserDefaults.standard.set(true, forKey: AppLaunchState.hasLoadedInitialTodos)
+                    
+                    
+                    self?.loadTasks()
+                    self?.tableView.reloadData()
+                    self?.setupBottomNumberLabel()
+                }
+                
+            case .failure(let error):
+                print("Ошибка сети: \(error)")
+            }
+        }
     }
 }
 

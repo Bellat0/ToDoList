@@ -30,4 +30,44 @@ extension TaskEntity {
             date: date ?? Date()
         )
     }
+    
+    func toTaskModel() -> TaskModel {
+        TaskModel(
+            id: id ?? UUID(),
+            isCompleted: isCompleted,
+            title: title ?? "",
+            description: taskDescription ?? "",
+            date: date ?? Date()
+        )
+    }
+}
+
+extension TodoDTO {
+
+    func toTaskModel() -> TaskModel {
+        TaskModel(
+            id: UUID(),
+            isCompleted: completed,
+            title: todo,
+            description: "",
+            date: Date()
+        )
+    }
+}
+
+extension TasksRepository {
+
+    func save(tasks: [TaskModel]) {
+        tasks.forEach { save(task: $0) }
+    }
+
+    func isEmpty() -> Bool {
+        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
+        let count = (try? context.count(for: request)) ?? 0
+        return count == 0
+    }
+}
+
+enum AppLaunchState {
+    static let hasLoadedInitialTodos = "hasLoadedInitialTodos"
 }

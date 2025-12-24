@@ -26,6 +26,10 @@
 		944075232EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944075222EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift */; };
 		9458ABCD2EFBE09500D2865B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458ABCC2EFBE09500D2865B /* CoreDataManager.swift */; };
 		9458ABCF2EFBE0D100D2865B /* TaskEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458ABCE2EFBE0D100D2865B /* TaskEntity+CoreDataProperties.swift */; };
+		9458ABD12EFBE2CF00D2865B /* TodosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458ABD02EFBE2CF00D2865B /* TodosModel.swift */; };
+		9458ABD32EFBE2EB00D2865B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458ABD22EFBE2EB00D2865B /* NetworkService.swift */; };
+		9458ABD62EFBE2FE00D2865B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9458ABD52EFBE2FE00D2865B /* Alamofire */; };
+		9458ABD82EFBE64B00D2865B /* TasksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458ABD72EFBE64A00D2865B /* TasksRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +53,9 @@
 		944075222EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9458ABCC2EFBE09500D2865B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		9458ABCE2EFBE0D100D2865B /* TaskEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9458ABD02EFBE2CF00D2865B /* TodosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodosModel.swift; sourceTree = "<group>"; };
+		9458ABD22EFBE2EB00D2865B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		9458ABD72EFBE64A00D2865B /* TasksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				944075092EFAA51500EC74B1 /* SnapKit in Frameworks */,
+				9458ABD62EFBE2FE00D2865B /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				944075132EFAD2A400EC74B1 /* TaskModel.swift */,
+				9458ABD02EFBE2CF00D2865B /* TodosModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,6 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				9458ABCC2EFBE09500D2865B /* CoreDataManager.swift */,
+				9458ABD22EFBE2EB00D2865B /* NetworkService.swift */,
+				9458ABD72EFBE64A00D2865B /* TasksRepository.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -203,6 +214,7 @@
 			name = ToDoList;
 			packageProductDependencies = (
 				944075082EFAA51500EC74B1 /* SnapKit */,
+				9458ABD52EFBE2FE00D2865B /* Alamofire */,
 			);
 			productName = ToDoList;
 			productReference = 944074D82EFAA42F00EC74B1 /* ToDoList.app */;
@@ -234,6 +246,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				944075072EFAA51500EC74B1 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				9458ABD42EFBE2FE00D2865B /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 944074D92EFAA42F00EC74B1 /* Products */;
@@ -263,11 +276,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9458ABD82EFBE64B00D2865B /* TasksRepository.swift in Sources */,
 				944075182EFAD82B00EC74B1 /* TableHeaderView.swift in Sources */,
 				944074FA2EFAA43A00EC74B1 /* AppDelegate.swift in Sources */,
 				9440750B2EFAA5CE00EC74B1 /* AppColors.swift in Sources */,
 				944074FB2EFAA43A00EC74B1 /* SceneDelegate.swift in Sources */,
 				944075162EFAD4FE00EC74B1 /* BottomView.swift in Sources */,
+				9458ABD32EFBE2EB00D2865B /* NetworkService.swift in Sources */,
+				9458ABD12EFBE2CF00D2865B /* TodosModel.swift in Sources */,
 				944075232EFAF1D200EC74B1 /* TaskEntity+CoreDataClass.swift in Sources */,
 				944075212EFAF14000EC74B1 /* ToDoListModel.xcdatamodeld in Sources */,
 				944075112EFAA72900EC74B1 /* TasksViewController+TableView.swift in Sources */,
@@ -506,6 +522,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		9458ABD42EFBE2FE00D2865B /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -513,6 +537,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 944075072EFAA51500EC74B1 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		9458ABD52EFBE2FE00D2865B /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9458ABD42EFBE2FE00D2865B /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 

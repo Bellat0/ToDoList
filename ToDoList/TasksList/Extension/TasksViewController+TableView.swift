@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,7 +47,24 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             
             let editAction = UIAction(title: "Редактировать", image: UIImage(systemName: "square.and.pencil")) { _ in
+                let task = self.filteredTasks[indexPath.row]
+                let vc = TaskDetailsViewController(task: task)
                 
+                vc.onSave = { [weak self] updatedTask in
+                    guard let self else { return }
+                    
+                    self.updateTaskInCoreData(updatedTask)
+                    
+                    self.filteredTasks[indexPath.row] = updatedTask
+                    
+                    if let index = self.tasks.firstIndex(where: { $0.id == updatedTask.id }) {
+                        self.tasks[index] = updatedTask
+                    }
+                    
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+                
+                self.navigationController?.pushViewController(vc, animated: true)
             }
             
             let shareAction = UIAction(title: "Поделиться", image: UIImage(systemName: "square.and.arrow.up")) { _ in
@@ -54,7 +72,20 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             let deleteAction = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                let taskToDelete = self.filteredTasks[indexPath.row]
+                
+                
+                CoreDataManager.shared.persistentContainer.performBackgroundTask { context in
+                    let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
+                    request.predicate = NSPredicate(format: "id == %@", taskToDelete.id as CVarArg)
+                    if let entity = try? context.fetch(request).first {
+                        context.delete(entity)
+                        try? context.save()
+                    }
+                }
+                
                 self.filteredTasks.remove(at: indexPath.row)
+                self.tasks.removeAll { $0.id == taskToDelete.id }
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
             
@@ -67,21 +98,21 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let task = filteredTasks[indexPath.row]
         let vc = TaskDetailsViewController(task: task)
-
+        
         vc.onSave = { [weak self] updatedTask in
             guard let self else { return }
-
+            
             self.updateTaskInCoreData(updatedTask)
-
+            
             self.filteredTasks[indexPath.row] = updatedTask
-
+            
             if let index = self.tasks.firstIndex(where: { $0.id == updatedTask.id }) {
                 self.tasks[index] = updatedTask
             }
-
+            
             self.tableView.reloadRows(at: [indexPath], with: .none)
         }
-
+        
         navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -9,8 +9,7 @@ import CoreData
 
 final class CoreDataManager {
 
-    static let shared = CoreDataManager()
-    private init() {}
+    static let shared = CoreDataManager(); private init() {}
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "ToDoListModel")
@@ -19,6 +18,7 @@ final class CoreDataManager {
                 fatalError("CoreData error: \(error)")
             }
         }
+        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }()
 
