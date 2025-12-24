@@ -109,6 +109,7 @@ final class TaskDetailsViewController: UIViewController {
         guard !title.isEmpty else { return }
 
         let newTask = TaskModel(
+            id: UUID(),
             isCompleted: task?.isCompleted ?? false,
             title: title,
             description: description,
